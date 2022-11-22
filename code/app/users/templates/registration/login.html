@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
+
+<form action="" method="post" class=" container ">{% csrf_token %}
+    <h6 class="form-label"> Ingrese sus datos para iniciar sesion: </h6>
+    <div class="contenedor-sm mb-3"> 
+        {{form.as_p}}
+        
+    <input class="btn btn-primary btn-xs" type="submit"> </input>
+    <a class="btn btn-primary btn-xs" href="{% url 'password_reset' %}"> Recuperar contraseña </a>
+    </div>
+      
+</form>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4 container">
+        {% for man in Todos_Manualidades%}
+        <div class="col">
+            <div class="card border-warning">
+                <div class="col-md-4"> <!--https://www.porcuatrocuartos.com/wp-content/uploads/2018/06/Manualidades-para-ni%C3%B1os-dibujar-y-pintar-620x539.jpg?ezimgfmt=ngcb4/notWebP-->
+                    <img src="https://i0.wp.com/www.imageneseducativas.com/wp-content/uploads/2016/03/manualidades-para-ni%C3%B1os-y-ni%C3%B1as-especial-primavera-PORTADA.jpg?fit=1200%2C624&ssl=1" class="img-fluid rounded-start" alt="" width="950">
+                </div>
+                
+                <div class="card-body">
+                    <div class="card-header ">
+                        <h5 class="card-title">{{man.nombre}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><p class="card-text">Material: <small class="text-muted">{{man.material}}</small></p></li>
+                        <li class="list-group-item"><p class="card-text">Herramienta: <small class="text-muted">{{man.herramientas}}</small></p></li>
+                    </ul>
+                    <p class="card-text">{{man.procedimiento}}</p>
+                    <a href="{{man.video}}">Video del Procedimiento</a>
+                </div>
+                
+                <div class="card-body">
+                    <a class="btn btn-warning btn-xs justify-content-md-end" href="{% url 'manualidades_detalle' man.pk %}"> Ver Mas </a>
+                </div>
+                <div class="card-footer border-warning">
+                    <small class="text-muted">Creador: {{man.creador}}</small>
+                </div>
+
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+
+<!--
+    <div class="card mb-3 container">
+        {% for man in Todos_Manualidades%}
+            <div class="card-body">
+                <img src="https://www.porcuatrocuartos.com/wp-content/uploads/2018/06/Manualidades-para-ni%C3%B1os-dibujar-y-pintar-620x539.jpg?ezimgfmt=ngcb4/notWebP" class="img-thumbnail rounded-start" alt="" width="500" height="900">
+                
+                <h5 class="card-title">{{man.nombre}}</h5>
+                <p class="card-text">Material: <small class="text-muted">{{man.material}}</small></p>
+                <p class="card-text">Herramienta: <small class="text-muted">{{man.herramientas}}</small></p>
+                
+                <p class="card-text">{{man.procedimiento}}</p>
+                <a href="{{man.video}}">Video del Procedimiento</a>
+                <br>
+            </div>
+            <blockquote class="blockquote mb-0">
+                <footer class="blockquote-footer">Creador:  <cite title="Source Title">{{man.creador}}</cite></footer>
+            </blockquote>
+            <div class="card-body">
+                <a class="btn btn-warning btn-xs justify-content-md-end" href="{% url 'manualidades_detalle' man.pk %}"> Ver Mas </a>
+            </div>
+        {% endfor %}
+    </div>-->
+<br>
+
+{% endblock content %}

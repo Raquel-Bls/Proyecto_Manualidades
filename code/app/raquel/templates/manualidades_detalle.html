@@ -1,0 +1,54 @@
+{% extends 'base.html' %}{% load crispy_forms_tags%}{% block content %}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S DETALLES</center> </h3> </div>
+
+<div class="card container">
+  <div class="card-header">
+    <h5 class="card-title"> <center> {{Todos_Manualidades.nombre}}</center></h5>
+  </div>
+  <div class="card-body">
+    
+    <p class="card-text">Material: <small class="text-muted">{{Todos_Manualidades.material}}</small></p>
+    <p class="card-text">Herramienta: <small class="text-muted">{{Todos_Manualidades.herramientas}}</small></p>
+                
+    <p class="card-text">{{Todos_Manualidades.procedimiento}}</p>
+    
+    <p><a href="{{Todos_Manualidades.video}}">Video del Procedimiento</a></p>
+    <footer class="blockquote-footer">Creador: <cite title="Source Title">{{Todos_Manualidades.creador}}</cite> </footer>
+    
+    <br> 
+    <div class="d-grid gap-2 d-md-block">
+        {% if user.is_superuser %}
+            <a href="{% url 'manualidades_editar' Todos_Manualidades.pk %}" class="btn btn-warning   btn-xs"> Editar </a>
+            <a href="{% url 'manualidades_eliminar' Todos_Manualidades.pk %}" class="btn btn-warning     btn-xs"> Eliminar </a>
+        {% endif %}
+        <a href="{% url 'comentariosM' Todos_Manualidades.pk  %}" class="btn btn-warning    btn-xs"> Comentario </a>
+    </div>
+     </div>
+    <br>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Comentarios
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">      
+            {% for comentario in Todos_Manualidades.comentarioM.all %}
+              <li class="list-group-item">{{comentario.NombreUM}} comento: <p>{{comentario}}</p>
+              {% if user.is_superuser %}
+                <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'comentariosM_eliminar' comentario.pk  %}"> Eliminar</a>
+                {% endif %}
+              </li>
+            {% endfor%}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'manualidades' %}"> Ver Todas Las Manualidades </a>
+ 
+    
+</div>
+
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}{% load crispy_forms_tags%}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
+
+<h2 class="container"> Registrar </h2>
+<form class="row g-3 container" action="" method="post" class="container ">{% csrf_token %}
+  {{form|crispy}}
+  <input class=" btn btn-warning container" type="submit" value="Registrar" />
+</form>
+
+{% endblock content %}

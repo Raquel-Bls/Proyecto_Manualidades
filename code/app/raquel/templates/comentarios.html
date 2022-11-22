@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% load crispy_forms_tags%}{% block content %}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
+<br>
+<form action="" method="post" class="container">{% csrf_token %}
+    
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Deje Su Comentario: </label>
+    <textarea class="form-control" id="comentario" name="Comentario" rows="3"></textarea>
+
+  </div>
+  <input class="btn btn-warning btn-xs" type="submit" value="Guardar"/>
+
+</div>
+</form>
+{% endblock content %}

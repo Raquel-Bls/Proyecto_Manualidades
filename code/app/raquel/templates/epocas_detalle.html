@@ -1,0 +1,54 @@
+{% extends 'base.html' %}{% load crispy_forms_tags%}{% block content %}
+<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S DETALLES</center> </h3> </div>
+
+<div class="card container">
+  <div class="card-header">
+    <h5 class="card-title"> <center> {{Todos_Epocas.Epoca_nom}}</center></h5>
+  </div>
+  <div class="card-body">
+    
+    <p class="card-text">{{Todos_Epocas.epoca_desc}}</p>
+                <p class="card-text">Dificultad: <small class="text-muted">{{Todos_Epocas.dificultad}}</small></p>
+                <p class="card-text">Curso: <small class="text-muted">{{Todos_Epocas.curso}}</small></p>
+            </div>
+            <blockquote class="blockquote mb-0">
+                <footer class="blockquote-footer">Fecha:  <cite title="Source Title">{{Todos_Epocas.fecha_epoca}}</cite></footer>
+                
+            </blockquote>
+    <br> 
+    <div class="d-grid gap-2 d-md-block">
+        {% if user.is_superuser %}
+            <a href="{% url 'epocas_editar' Todos_Epocas.pk %}" class="btn btn-warning   btn-xs"> Editar </a>
+            <a href="{% url 'epocas_eliminar' Todos_Epocas.pk %}" class="btn btn-warning     btn-xs"> Eliminar </a>
+        {% endif %}
+        <!-- <a href="{% url 'comentarios' Todos_Epocas.pk  %}" class="btn btn-warning btn-xs"> Comentario </a>-->
+        
+      </div><br><a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'epocas' %}"> Ver Todas Las Epocas </a>
+    </div>
+    <br>
+     </div>
+    <br>
+    
+     <!-- <div class="accordion container" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Comentarios
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">        
+            {% for comentario in Todos_Epocas.comentarios.all %}
+              <li class="list-group-item">{{comentario.NombreU}} comento: <p>{{comentario}}</p>
+              {% if user.is_superuser %}
+                <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'comentarios_eliminar' comentario.pk  %}"> Eliminar</a>
+                {% endif %}
+              </li>
+            {% endfor%}
+          </div>
+        </div>-->
+    </div>
+    <br>
+</div>
+
+{% endblock content %}
