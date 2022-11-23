@@ -136,10 +136,13 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # --------------- RECUPERACION DE CONTRASEÑA ---------------
 
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'rousalimarquez12@gmail.com'
-EMAIL_HOST_PASSWORD = 'qkckwcutxqppbglp'
+EMAIL_HOST_USER = 'rousalimarquez13@gmail.com'
+# 'qkckwcutxqppbglp'  # 'uopyurhfmcbvvbqt'
+EMAIL_HOST_PASSWORD = 'ecdgawcsnvoqompt'  # rousalimarquez12 'djarmzadqnirxwtv'
 EMAIL = 25
 EMAIL_USE_TLS = True
