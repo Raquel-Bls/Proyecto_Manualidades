@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% load crispy_forms_tags%}{% block content %}
+
+<form action="" method="post" class="container">{% csrf_token %}
+    
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Deje Su Comentario: </label>
+    <textarea class="form-control" id="comentario" name="ComentarioE" rows="3"></textarea>
+
+  </div>
+  <input class="btn btn-warning btn-xs" type="submit" value="Guardar"/>
+
+</div>
+</form>
+{% endblock content %}

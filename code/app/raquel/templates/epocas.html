@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
+
+<div class="container">
+    <form class="form-inline mt-2 mt-md-0" action="{% url 'busqueda_epocas' %}" method="get">
+    <input name="q" class="form-control mr-sm-2" type="text" placeholder="Buscar"
+    aria-label="Buscar"> </form>
+</div>
 
     <div class="card-group container">
         {% for epoca in Todos_Epocas%}
         <div class="card border-warning">
-            <img src="https://www.unotv.com/uploads/2022/06/festivos-180921.jpg" class="img-thumbnail rounded-start" alt="" width="600" height="800">
+            <div class="container"><br>
+                {% if epoca.posterE %}
+                    <center> <img class="image" src="{{ epoca.posterE.url }}"  alt="MANUALIDADES" width="300" height="400" > </center>
+                {% else %}
+                    <center><img class="image" src="https://e7.pngegg.com/pngimages/829/733/png-clipart-logo-brand-product-trademark-font-not-found-logo-brand.png" width="300" height="400" ></center>
+                {% endif %} 
+            </div> 
             <div class="card-body">
                 <h5 class="card-title">{{epoca.Epoca_nom}}</h5>
                 <p class="card-text">{{epoca.epoca_desc}}</p>

@@ -1,0 +1,96 @@
+{% load static %}
+{% load socialaccount %}
+<header>
+    <body>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+        <script type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/slider2.js' %}"></script>
+        <div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h1> <center>MANUALIDADES RACHEL'S</center> </h1> </div>
+
+    <nav class="nav justify-content-end navbar-light" style="background-color: #ffe88b;">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}"> Home </a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cursos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="nav-link active"  href="{% url 'cursos' %}" > Cursos </a></li>
+                        {% if user.is_superuser %}
+                            {% if not perms.raquel.admin_generico %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'cursos_nuevo' %}" > Crear Nuevo Curso </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Manualidades
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link active" aria-current="page" href="{% url 'manualidades' %}"> Manualidades </a>
+                        {% if user.is_superuser %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'manualidades_nuevo' %}" > Crear Nueva Manualidad </a>
+                            </li> 
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Epocas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link active" aria-current="page" href="{% url 'epocas' %}"> Epocas </a>
+                        {% if user.is_superuser %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'epocas_nuevo' %}" > Crear Nueva Epocas </a>
+                            </li> 
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cerrar Sesion 
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'account_logout' %}" > Log out </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Cambiar Contraseña</a></li>
+                    </ul>
+                  </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Iniciar Sesion 
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'account_login' %}">   Login </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'account_signup' %}">   Registrar </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% provider_login_url 'github' %}"> Github </a></li>
+                    </ul>
+                </li>
+            {% endif %}
+            
+          </ul>
+    </nav>
+
+        {% block content %}
+    
+        {% endblock content %}
+    </header>

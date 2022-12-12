@@ -33,12 +33,20 @@ class Manualidades(models.Model):
         get_user_model(), on_delete=models.CASCADE, related_name='creador',)
     video = models.URLField(null=True, blank=True,
                             verbose_name="Dirección Web")
+    poster = models.ImageField(upload_to="poster/", blank=True)
+    precio = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self) -> str:
         return self.nombre
 
     def get_absolute_url(self):
         return reverse("manualidades_detalle", args=[str(self.id)])
+
+    class Meta:
+        permissions = [
+            ('admin_genericoManualidades', 'Puede editar y crear Manualidades'),
+            ('suscriptorManualidades', 'Pago de suscripcion, ver video Manualidades')
+        ]
 
 
 class Curso(models.Model):
@@ -49,12 +57,20 @@ class Curso(models.Model):
     horario = models.CharField(max_length=15)
     manualidades = models.ForeignKey(
         Manualidades, on_delete=models.CASCADE, related_name='manualidades',)  # -> modelo manualidades
+    precio = models.PositiveIntegerField(null=True, blank=True)
+    posterC = models.ImageField(upload_to="poster/", blank=True)
 
     def __str__(self) -> str:
         return self.nom_curso
 
     def get_absolute_url(self):
         return reverse("cursos_detalle", args=[str(self.id)])
+
+    class Meta:
+        permissions = [
+            ('admin_generico', 'Puede editar y crear Cursos'),
+            ('suscriptor', 'Pago de suscripcion, ver Cursos')
+        ]
 
 
 class Dificultad(models.Model):
@@ -74,6 +90,7 @@ class Epocas(models.Model):
         Dificultad, on_delete=models.CASCADE, related_name='dificultad')  # -> modelo dificultad
     impartidor = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name='imparti',)
+    posterE = models.ImageField(upload_to="poster/", blank=True)
 
     def __str__(self) -> str:
         return self.Epoca_nom
@@ -108,25 +125,25 @@ class ComentariosM(models.Model):
         return reverse("manualidades_detalle", args=[str(self.nom_manualidad_id)])
 
 
-# class ComentariosE(models.Model):
- #   nom_epocas = models.ForeignKey(
-  #      Epocas, on_delete=models.CASCADE, related_name='comentarioE',)
-   # ComentarioE = models.CharField(max_length=200)
-    #NombreUE = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
+class ComentariosE(models.Model):
+    nom_epocas = models.ForeignKey(
+        Epocas, on_delete=models.CASCADE, related_name='comentarioE',)
+    ComentarioE = models.CharField(max_length=200)
+    NombreUE = models.ForeignKey(get_user_model(), on_delete=models.CASCADE,)
 
-    # def __str__(self) -> str:
-     #   return self.ComentarioE
+    def __str__(self) -> str:
+        return self.ComentarioE
 
-    # def get_absolute_url(self):
-     #   return reverse("epocas_detalle", args=[str(self.nom_epocas_id)])
+    def get_absolute_url(self):
+        return reverse("epocas_detalle", args=[str(self.nom_epocas_id)])
 
- # N_Manualidad = models.ForeignKey(
+  # N_Manualidad = models.ForeignKey(
     #   Manualidades, on_delete=models.CASCADE, related_name='comentMan',)
     # N_Epoca = models.ForeignKey(
     #  Epocas, on_delete=models.CASCADE, related_name='comentEpoca',)
 
-   # def get_absolute_url(self):
+    # def get_absolute_url(self):
     #    return reverse("manualidades_detalle", args=[str(self.manualidades_id)])
 
     # def get_absolute_url(self):
-     #   return reverse("epocas_detalle", args=[str(self.epocas_id)])
+      #   return reverse("epocas_detalle", args=[str(self.epocas_id)])

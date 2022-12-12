@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}{% load crispy_forms_tags%}
+
+<h1 class="container"> Registrar </h1>
+<div class="container">
+<form class="signup container" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
+  {{form|crispy}}
+  <br>
+  <input class=" btn btn-warning container" type="submit" value="Registrar" />
+</form>
+</div>
+{% endblock content %}

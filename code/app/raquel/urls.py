@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import cursosPageview, cursosPageCreate, cursosPageDetail, cursosPageUpdate, cursosPageDelete, comentriosPageCreate, comentriosPageDelete, manualidadesPageCreate,  manualidadesPageview
+from .views import homePageView, cursosPageview, cursosPageCreate, cursosPageDetail, cursosPageUpdate, cursosPageDelete, comentriosPageCreate, comentriosPageDelete, manualidadesPageCreate,  manualidadesPageview
 from .views import manualidadesPageDetail, manualidadesPageUpdate, manualidadesPageDelete, comentriosMPageCreate, comentriosMPageDelete, epocasPageview, epocasPageCreate, epocasPageDetail, epocasPageUpdate, epocasPageDelete
+from .views import comentriosEPageCreate, comentriosEPageDelete, resultadoBusquedaListView, resultadoBusquedaMListView, resultadoBusquedaEListView
 
 
 urlpatterns = [
+    path('', homePageView.as_view(), name='home'),
     # --------------------- CURSOS -------------
     path('cursos/', cursosPageview.as_view(), name='cursos'),
     path('cursos/<int:pk>', cursosPageDetail.as_view(), name='cursos_detalle'),
@@ -13,7 +15,7 @@ urlpatterns = [
     path('cursos/<int:pk>/eliminar/',
          cursosPageDelete.as_view(), name='cursos_eliminar'),
     # --------------------- MANUALIDADES -------------
-    path('manualidades/', manualidadesPageview.as_view(), name='manualidades'),
+    path('/manualidades/', manualidadesPageview.as_view(), name='manualidades'),
     path('manualidades/<int:pk>', manualidadesPageDetail.as_view(),
          name='manualidades_detalle'),
     path('manualidades/nuevo', manualidadesPageCreate.as_view(),
@@ -37,8 +39,19 @@ urlpatterns = [
          comentriosPageCreate.as_view(), name='comentarios'),
     path('<int:pk>/comentariosM/',
          comentriosMPageCreate.as_view(), name='comentariosM'),
+    path('<int:pk>/comentariosE/',
+         comentriosEPageCreate.as_view(), name='comentariosE'),
     path('comentarios/<int:pk>/eliminar/',
          comentriosPageDelete.as_view(), name='comentarios_eliminar'),
     path('comentariosM/<int:pk>/eliminar/',
          comentriosMPageDelete.as_view(), name='comentariosM_eliminar'),
+    path('comentariosE/<int:pk>/eliminar/',
+         comentriosEPageDelete.as_view(), name='comentariosE_eliminar'),
+    # --------------------BUSQUEDA------------
+    path('pelicula/buscarCurso',
+         resultadoBusquedaListView.as_view(), name='busqueda_curso'),
+    path('pelicula/buscarManualidad',
+         resultadoBusquedaMListView.as_view(), name='busqueda_manualidades'),
+    path('pelicula/buscarEpoca',
+         resultadoBusquedaEListView.as_view(), name='busqueda_epocas'),
 ]

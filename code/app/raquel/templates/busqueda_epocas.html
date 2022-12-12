@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="card-group container">
+        {% for epoca in Todos_EpocasBusquedas%}
+        <div class="card border-warning">
+            <img src="https://www.unotv.com/uploads/2022/06/festivos-180921.jpg" class="img-thumbnail rounded-start" alt="" width="600" height="800">
+            <div class="card-body">
+                <h5 class="card-title">{{epoca.Epoca_nom}}</h5>
+                <p class="card-text">{{epoca.epoca_desc}}</p>
+                <p class="card-text">Dificultad: <small class="text-muted">{{epoca.dificultad}}</small></p>
+                <p class="card-text">Curso: <small class="text-muted">{{epoca.curso}}</small></p>
+            </div>
+            <div class="card-body">
+                <a class="btn btn-warning justify-content-md-end" href="{% url 'epocas_detalle' epoca.pk %}"> Ver Mas </a>
+            </div>
+            <div class="card-footer border-warning">
+                <small class="text-muted">Fecha: <cite title="Source Title">{{epoca.fecha_epoca}}</cite></small>
+            </div>
+            
+        </div>
+        {% endfor %}
+    </div>
+<br>
+
+{% endblock content %}

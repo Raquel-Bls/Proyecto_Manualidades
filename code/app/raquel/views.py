@@ -1,15 +1,20 @@
 # from django.shortcuts import render
 # Obliga a que estes logueado para poder visualizar la vista#
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 # Valida los permisos
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 # , Herramientas, Impartidor, Dificultad
-from .models import Comentarios, Curso, Manualidades, Epocas,  ComentariosM
-# Para que te regrese a la pagina principal de una manera mas lentaComentariosE,
+from .models import Comentarios, Curso, Manualidades, Epocas,  ComentariosM, ComentariosE
+# Para que te regrese a la pagina principal de una manera mas lenta,
 from django.urls import reverse_lazy
 from django.http import HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
+
+class homePageView(TemplateView):
+    template_name = 'home.html'
 
 # -------------------- CURSOS ---------------------------
 
@@ -21,18 +26,20 @@ class cursosPageview(LoginRequiredMixin, ListView):
     login_url = 'login'
 
 
-class cursosPageDetail(LoginRequiredMixin, DetailView):
+class cursosPageDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     template_name = 'cursos_detalle.html'
     model = Curso
     context_object_name = 'Todos_Cursos'
+    permission_required = 'raquel.suscriptor'
     login_url = 'login'
 
 
-class cursosPageCreate(LoginRequiredMixin, CreateView):
+class cursosPageCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = 'cursos_nuevo.html'
     model = Curso
     fields = ('nom_curso', 'descripcion',
-              'impartidor', 'horario', 'manualidades')
+              'impartidor', 'horario', 'manualidades', 'precio', 'posterC')
+    permission_required = 'raquel.admin_generico'
     login_url = 'login'
 
     def form_valid(self, form):
@@ -45,10 +52,11 @@ class cursosPageCreate(LoginRequiredMixin, CreateView):
         return HttpResponseNotFound('<h1> NO SE CUENTA CON ACCESO PARA REALIZAR ESE CAMBIO </h1>')
 
 
-class cursosPageUpdate(LoginRequiredMixin, UpdateView):
+class cursosPageUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'cursos_editar.html'
     model = Curso
-    fields = ['descripcion', 'horario', 'manualidades']
+    fields = ['descripcion', 'horario', 'manualidades', 'precio', 'posterC']
+    permission_required = 'raquel.admin_generico'
     login_url = 'login'
 
     def dispatch(self, request, *args, **kwargs):
@@ -93,7 +101,7 @@ class manualidadesPageCreate(LoginRequiredMixin, CreateView):
     template_name = 'manualidades_nuevo.html'
     model = Manualidades
     fields = ('nombre', 'material',
-              'herramientas', 'procedimiento', 'creador', 'video')
+              'herramientas', 'procedimiento', 'creador', 'video', 'poster')
     login_url = 'login'
 
     def form_valid(self, form):
@@ -109,7 +117,7 @@ class manualidadesPageCreate(LoginRequiredMixin, CreateView):
 class manualidadesPageUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'manualidades_editar.html'
     model = Manualidades
-    fields = ['herramientas', 'procedimiento', 'video']
+    fields = ['herramientas', 'procedimiento', 'video', 'poster']
     login_url = 'login'
 
     def dispatch(self, request, *args, **kwargs):
@@ -152,7 +160,7 @@ class epocasPageCreate(LoginRequiredMixin, CreateView):
     template_name = 'epocas_nuevo.html'
     model = Epocas
     fields = ('Epoca_nom', 'epoca_desc',
-              'curso', 'dificultad', 'impartidor')
+              'curso', 'dificultad', 'impartidor', 'posterE')
     login_url = 'login'
 
     def form_valid(self, form):
@@ -165,19 +173,11 @@ class epocasPageCreate(LoginRequiredMixin, CreateView):
             # return login_required(super(LoginRequiredMixin).as_view())
         return HttpResponseNotFound('<h1> NO SE CUENTA CON ACCESO PARA REALIZAR ESE CAMBIO </h1>')
 
-     # def dispatch(self, request, *args, **kwargs):
-      #  if not request.user.has_perms(self.required_permissions):
-       #     messages.error(request,'You do not have the permission required to perform the ''requested operation.')
-        #    return redirect(settings.LOGIN_URL)}
-        # return login_required(super(LoginRequiredMixin, cls).as_view())
-        # return super(PermissionsRequiredMixin, self).dispatch(
-        #   request, *args, **kwargs)
-
 
 class epocasPageUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'epocas_editar.html'
     model = Epocas
-    fields = ['epoca_desc', 'curso', 'dificultad']
+    fields = ['epoca_desc', 'curso', 'dificultad', 'posterE']
     login_url = 'login'
 
     def dispatch(self, request, *args, **kwargs):
@@ -226,16 +226,16 @@ class comentriosMPageCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-# class comentriosPageCreate(LoginRequiredMixin, CreateView):
- #   template_name = 'comentarios.html'
-  #  model = ComentariosE
-   # fields = ('Comentario',)
-    #login_url = 'login'
+class comentriosEPageCreate(LoginRequiredMixin, CreateView):
+    template_name = 'comentariosE.html'
+    model = ComentariosE
+    fields = ('ComentarioE',)
+    login_url = 'login'
 
-    # def form_valid(self, form):
-     #   form.instance.NombreU = self.request.user
-      #  form.instance.nom_epocas_id = self.kwargs['pk']
-       # return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.NombreUE = self.request.user
+        form.instance.nom_epocas_id = self.kwargs['pk']
+        return super().form_valid(form)
 
 
 class comentriosPageDelete(LoginRequiredMixin, DeleteView):
@@ -265,4 +265,48 @@ class comentriosMPageDelete(LoginRequiredMixin, DeleteView):
             return super().dispatch(request, *args, **kwargs)
         return HttpResponseNotFound('<h1> NO SE CUENTA CON ACCESO PARA REALIZAR ESE CAMBIO </h1>')
 
-# Create your views here.
+
+class comentriosEPageDelete(LoginRequiredMixin, DeleteView):
+    template_name = 'comentariosE_eliminar.html'
+    model = ComentariosE
+    fields = "_all_"
+    success_url = reverse_lazy('epocas')
+    login_url = 'login'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponseNotFound('<h1> NO SE CUENTA CON ACCESO PARA REALIZAR ESE CAMBIO </h1>')
+
+# ----------------------- Busqueda------------------
+
+
+class resultadoBusquedaListView(ListView):
+    template_name = 'busqueda_curso.html'
+    model = Curso
+    context_object_name = 'Todos_CursoBusquedas'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Curso.objects.filter(Q(nom_curso__icontains=query) | Q(nom_curso__icontains=query))
+
+
+class resultadoBusquedaMListView(ListView):
+    template_name = 'busqueda_manualidades.html'
+    model = Manualidades
+    context_object_name = 'Todos_ManBusquedas'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Manualidades.objects.filter(Q(nombre__icontains=query) | Q(nombre__icontains=query))
+
+
+class resultadoBusquedaEListView(ListView):
+    template_name = 'busqueda_epocas.html'
+    model = Epocas
+    context_object_name = 'Todos_EpocasBusquedas'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Epocas.objects.filter(Q(Epoca_nom__icontains=query) | Q(Epoca_nom__icontains=query))

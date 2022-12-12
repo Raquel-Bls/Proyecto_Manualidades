@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1> PAGINA DE COBRO  de curso </h1>
+    <h2> {{Todos_Cursos.nom_curso}}</h2>
+        <h4> El pago seria de: ${{Todos_Cursos.precio}}</h4>
+
+    <form action="{% url 'charge' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{Todos_Cursos.nom_curso}}" id="nombre" name="nombre">
+        <input type="hidden" value="{{Todos_Cursos.precio }}" id="precio" name="precio" > 
+
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{ stripe_key }}" 
+        data-description="Pago del Curso" data-amount="{{Todos_Cursos.precio}}00"
+        data-locale="auto">
+    </script>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="row row-cols-1 row-cols-md-2 g-4 container">
+        {% for man in Todos_ManBusquedas%}
+        <div class="col">
+            <div class="card border-warning">
+                <div class="col-md-4"> <!--https://www.porcuatrocuartos.com/wp-content/uploads/2018/06/Manualidades-para-ni%C3%B1os-dibujar-y-pintar-620x539.jpg?ezimgfmt=ngcb4/notWebP-->
+                    {% if man.poster %}
+                    <center> <img src="{{man.poster.url}}" class="img-thumbnail rounded-start" alt="MANUALIDADES" width="250"></center> 
+                    {% else %}
+                   <center> <img src="https://e7.pngegg.com/pngimages/829/733/png-clipart-logo-brand-product-trademark-font-not-found-logo-brand.png" class="img-thumbnail rounded-start" alt="POESTER NO ENCONTRADO" width="550"></center>
+                    {% endif %}   
+                </div>
+                
+                <div class="card-body">
+                    <div class="card-header ">
+                        <h5 class="card-title">{{man.nombre}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><p class="card-text">Material: <small class="text-muted">{{man.material}}</small></p></li>
+                        <li class="list-group-item"><p class="card-text">Herramienta: <small class="text-muted">{{man.herramientas}}</small></p></li>
+                    </ul>
+                    <p class="card-text">{{man.procedimiento}}</p>
+                    <a href="{{man.video}}">Video del Procedimiento</a>
+                </div>
+                
+                <div class="card-body">
+                    <a class="btn btn-warning btn-xs justify-content-md-end" href="{% url 'manualidades_detalle' man.pk %}"> Ver Mas </a>
+                </div>
+                <div class="card-footer border-warning">
+                    <small class="text-muted">Creador: {{man.creador}}</small>
+                </div>
+
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+<br>
+
+{% endblock content %}

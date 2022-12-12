@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&family=Rubik+Gemstones&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&family=Rubik+Gemstones&family=Yanone+Kaffeesatz&display=swap');
+
+h1 {
+    font-family: 'Rubik 80s Fade', cursive;
+    font-family: 'Rubik Gemstones', cursive;
+}
+
+p {
+    font-family: 'Rubik 80s Fade', cursive;
+    font-family: 'Rubik Gemstones', cursive;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.image {
+    border: 4px solid #f7b832;
+    padding: 15px;
+    justify-content: center;
+}
+
+@media (min-widht: 700px) {
+    body {
+        padding: 0 4rem;
+    }
+
+    .container,
+    .card-body,
+    .btn-group {
+        display: grid;
+    }
+}

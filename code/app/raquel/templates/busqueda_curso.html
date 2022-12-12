@@ -1,0 +1,30 @@
+{% extends 'base.html' %}{% load static %}
+{% block content %}
+
+    <center>
+    <div class="row row-cols-1 row-cols-md-2 g-4 container ">
+        {% for cur in Todos_CursoBusquedas%}
+        <div class="col">
+            <div class="card border-warning">
+                <img src="https://manualidadesya.com/wp-content/uploads/2017/11/curso-gratis-manualidades-.jpg" class="card-img-top" alt="CURSOS">
+                <div class="card-body">
+                    <h5 class="card-title">{{cur.nom_curso}}</h5>
+                    <p class="card-text">{{cur.descripcion}}</p>
+                    <blockquote class="blockquote mb-0">
+                        <footer class="blockquote-footer">Horario del Curso:  <cite title="Source Title">{{cur.horario}}</cite></footer>
+                        <footer class="blockquote-footer">Manualidad:  <cite title="Source Title "> <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'cursos_detalle' cur.pk %}"> {{cur.manualidades}}</a> </cite></footer>
+                    </blockquote>
+                </div>
+                <div class="card-footer border-warning">
+                    <small class="text-muted">Creador: {{cur.impartidor}}</small>
+                </div>
+
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</center>
+<br>
+
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}{% load crispy_forms_tags%}
+{% block content %}
+<div class="container">
+    <form action="" method="post" class=" container ">{% csrf_token %}
+        <h1 class="form-label"> Ingrese sus datos para iniciar sesion: </h1>
+        <div class="contenedor-sm mb-3"> 
+            {{form|crispy}} <!-- {{form.as_p}}-->
+        <br>    
+        <input class="btn btn-warning btn-xs" type="submit"> </input>
+        <a class="btn btn-warning btn-xs" href="{% url 'password_reset' %}"> Recuperar contraseña </a>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

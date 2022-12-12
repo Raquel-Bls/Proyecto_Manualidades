@@ -1,19 +1,39 @@
 {% extends 'base.html' %}{% load static %}
 {% block content %}
-<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S</center> </h3> </div>
 
     <center>
+    <div class="container">
+        <form class="form-inline mt-2 mt-md-0" action="{% url 'busqueda_curso' %}" method="get">
+            <input name="q" class="form-control mr-sm-2" type="text" placeholder="Buscar"
+            aria-label="Buscar"> </form>
+    </div>
     <div class="row row-cols-1 row-cols-md-2 g-4 container ">
         {% for cur in Todos_Cursos%}
         <div class="col">
             <div class="card border-warning">
-                <img src="https://manualidadesya.com/wp-content/uploads/2017/11/curso-gratis-manualidades-.jpg" class="card-img-top" alt="CURSOS">
+                {% if cur.posterC %}
+                    <center> <img class="image" src="{{ cur.posterC.url }}"  alt="MANUALIDADES" width="300" height="400" > </center>
+                {% else %}
+                    <center><img class="image" src="https://e7.pngegg.com/pngimages/829/733/png-clipart-logo-brand-product-trademark-font-not-found-logo-brand.png" width="300" height="400" ></center>
+                {% endif %} 
                 <div class="card-body">
                     <h5 class="card-title">{{cur.nom_curso}}</h5>
                     <p class="card-text">{{cur.descripcion}}</p>
                     <blockquote class="blockquote mb-0">
                         <footer class="blockquote-footer">Horario del Curso:  <cite title="Source Title">{{cur.horario}}</cite></footer>
-                        <footer class="blockquote-footer">Manualidad:  <cite title="Source Title "> <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'cursos_detalle' cur.pk %}"> {{cur.manualidades}}</a> </cite></footer>
+                        {% if perms.raquel.suscriptor %}
+                            <footer class="blockquote-footer">Manualidad:  <cite title="Source Title "> <a class="btn btn-outline-warning btn-xs justify-content-md-end" href="{% url 'cursos_detalle' cur.pk %}"> {{cur.manualidades}}</a> </cite></footer>
+                        {% else %}
+                        <footer class="blockquote-footer">Manualidad:  <cite title="Source Title "> {{cur.manualidades}}</cite></footer>
+                        {% endif%}
+                        <footer class="blockquote-footer">Precio del Curso:  <cite title="Source Title">{{cur.precio}}</cite></footer>
+                        
+                        {% if not perms.raquel.suscriptor %}
+                            <div class="">
+                                <p><a href="{% url 'orders' cur.pk %}" class="btn btn-success"> Pagar Suscripcion </a></p>
+                            </div>
+                        {% endif%}
+                        
                     </blockquote>
                 </div>
                 <div class="card-footer border-warning">

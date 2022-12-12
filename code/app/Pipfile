@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 django = "*"
 django-crispy-forms = "*"
+psycopg2-binary = "*"
+python-social-auth = "*"
+pillow = "*"
+stripe = "*"
 
 [dev-packages]
 

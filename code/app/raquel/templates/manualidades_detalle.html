@@ -1,18 +1,23 @@
 {% extends 'base.html' %}{% load crispy_forms_tags%}{% block content %}
-<div class="p-3 mb-2 bg-warning bg-gradient text-white" > <h3> <center>MANUALIDADES RACHEL'S DETALLES</center> </h3> </div>
 
 <div class="card container">
+  
   <div class="card-header">
     <h5 class="card-title"> <center> {{Todos_Manualidades.nombre}}</center></h5>
   </div>
   <div class="card-body">
-    
+    {% if Todos_Manualidades.poster %}
+    <center> <img src="{{Todos_Manualidades.poster.url}}" class="img-thumbnail rounded-start" alt="MANUALIDADES" width="250"></center> 
+    {% else %}
+   <center> <img src="https://e7.pngegg.com/pngimages/829/733/png-clipart-logo-brand-product-trademark-font-not-found-logo-brand.png" class="img-thumbnail rounded-start" alt="POESTER NO ENCONTRADO" width="550"></center>
+    {% endif %}
     <p class="card-text">Material: <small class="text-muted">{{Todos_Manualidades.material}}</small></p>
     <p class="card-text">Herramienta: <small class="text-muted">{{Todos_Manualidades.herramientas}}</small></p>
                 
     <p class="card-text">{{Todos_Manualidades.procedimiento}}</p>
     
     <p><a href="{{Todos_Manualidades.video}}">Video del Procedimiento</a></p>
+    
     <footer class="blockquote-footer">Creador: <cite title="Source Title">{{Todos_Manualidades.creador}}</cite> </footer>
     
     <br> 
