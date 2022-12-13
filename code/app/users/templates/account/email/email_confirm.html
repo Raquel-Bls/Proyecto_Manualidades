@@ -1,31 +1,32 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% load i18n %}
 {% load account %}
 
-{% block head_title %}{% trans "Confirmar dirección de correo electrónico" %}{% endblock %}
+{% block head_title %}{% trans "Confirmar el correo" %}{% endblock %}
 
 
 {% block content %}
-<h1>{% trans "Confirmar dirección de correo electrónico" %}</h1>
+<div class="container">
+<h1>{% trans "Confirmar el correo" %}</h1>
 
 {% if confirmation %}
 
 {% user_display confirmation.email_address.user as user_display %}
 
-<p>{% blocktrans with confirmation.email_address.email as email %}Confirme que  <a href="mailto:{{ email }}">{{ email }}</a> es una dirección de correo electrónico para el usuario {{ user_display }}.{% endblocktrans %}</p>
+<p>{% blocktrans with confirmation.email_address.email as email %} Por favor confirme eso <a href="mailto:{{ email }}">{{ email }}</a> es una dirección de correo electrónico para la usuaria. {{ user_display }}.{% endblocktrans %}</p>
 
-<form method="post" action="{% url 'account_email_confirm' confirmation.key %}">
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
 {% csrf_token %}
-    <button type="submit">{% trans 'Confirmar' %}</button>
+    <button class=" btn btn-warning container" type="submit">{% trans 'Confirmar' %}</button>
 </form>
 
 {% else %}
 
 {% url 'account_email' as email_url %}
 
-<p>{% blocktrans %} Este enlace de confirmación de correo electrónico caducó o no es válido. <a href="{{ email_url }}"> emita una nueva solicitud de confirmación por correo electrónico </a>.{% endblocktrans %}</p>
-
+<p>{% blocktrans %}Este enlace de confirmación por correo electrónico caducó o no es válido. Por favor <a href="{{ email_url }}"> emitir una nueva solicitud de confirmación por correo electrónico </a>.{% endblocktrans %}</p>
+</div>
 {% endif %}
 
 {% endblock %}
